@@ -21,18 +21,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module iram(addr, data, pwr_on);
+module iram #(parameter ADDR_LEN = `ADDR_LEN, parameter IRAM_WIDTH = `IRAM_WIDTH, parameter IRAM_DEPTH = `IRAM_DEPTH) (addr, data, pwr_on);
     
-    input[`ADDR_LEN-1:0] addr;
+    input[ADDR_LEN-1:0] addr;
     input pwr_on;
-    output [`IRAM_WIDTH-1:0] data;
-    reg [`IRAM_WIDTH-1:0] memory [0:`IRAM_DEPTH];
+    output [IRAM_WIDTH-1:0] data;
+    reg [IRAM_WIDTH-1:0] memory [0:IRAM_DEPTH];
     
     integer i;
     
     initial begin
-        for (i = 0; i < `IRAM_DEPTH; i = i + 1) begin
-            memory[i] = {`IRAM_WIDTH{1'b0}};
+        for (i = 0; i < IRAM_DEPTH; i = i + 1) begin
+            memory[i] = {IRAM_WIDTH{1'b0}};
         end
         $readmemh("firmware.mem", memory);
     end
@@ -42,8 +42,8 @@ module iram(addr, data, pwr_on);
 `ifdef INTERMITTENT_PWR_SIM
     always @(pwr_on) begin
         if (pwr_on == 0) begin
-            for (i = 0; i < `IRAM_DEPTH; i = i + 1) begin
-                memory[i] = {`IRAM_WIDTH{1'bX}};
+            for (i = 0; i < IRAM_DEPTH; i = i + 1) begin
+                memory[i] = {IRAM_WIDTH{1'bX}};
             end
         end
     end 

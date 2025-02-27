@@ -21,21 +21,21 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module reg_n(i, q, ld, pwr_on, clk, rst);
+module reg_n #(parameter WIDTH = `REG_WIDTH)(i, q, ld, pwr_on, clk, rst);
 
-    input [`PC_WIDTH-1:0] i;    // input vector
-    output [`PC_WIDTH-1:0] q;   // output vector
+    input [WIDTH-1:0] i;    // input vector
+    output [WIDTH-1:0] q;   // output vector
     input ld;                   // load control signal 
     input pwr_on;               // power control signal, 1 => On, 0 => Off
     input clk;                  // clock signal
     input rst;                  // reset signal
     
-    reg [`PC_WIDTH-1:0] r;
+    reg [WIDTH-1:0] r;
 
 
     always @(posedge clk, pwr_on) begin  // synchronous reset
         if (rst == 1) 
-            r <= {`PC_WIDTH{1'b0}};  // reset to zero
+            r <= {WIDTH{1'b0}};  // reset to zero
         else if (ld == 1)
             r <= i;  // load input vector
         
@@ -43,7 +43,7 @@ module reg_n(i, q, ld, pwr_on, clk, rst);
 // intermittent power behavior simulation   
 `ifdef INTERMITTENT_PWR_SIM
         if (pwr_on == 0)
-            r <= {`PC_WIDTH{1'bx}};  // set to high impedance
+            r <= {WIDTH{1'bx}};  // set to high impedance
 `endif
 //////////////////////////////////////////////////////////////////////////////////
     end 

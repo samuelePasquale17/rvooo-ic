@@ -1,7 +1,7 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../rvooo-ic.srcs/sources_1/new" \
-"../../../../rvooo-ic.srcs/sources_1/new/iram.v" \
-"../../../../rvooo-ic.srcs/sources_1/new/tb_iram.v" \
+"../../../../rvooo-ic.srcs/sources_1/new/mux2_n.v" \
+"../../../../rvooo-ic.srcs/sources_1/new/tb_mux2_n.v" \
 
 # compile glbl module
 verilog xil_defaultlib "glbl.v"

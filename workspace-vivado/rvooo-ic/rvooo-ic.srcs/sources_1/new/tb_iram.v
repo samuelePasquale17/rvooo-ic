@@ -29,7 +29,7 @@ module tb_iram();
     
     integer i;
 
-    iram dut (
+    iram #(.ADDR_LEN(`ADDR_LEN), .IRAM_WIDTH(`IRAM_WIDTH), .IRAM_DEPTH(`IRAM_DEPTH)) dut (
         .addr(addr_s), 
         .data(data_s), 
         .pwr_on(pwr_on_s)
@@ -40,7 +40,6 @@ module tb_iram();
         // read memory
         for (i = 0; i < 512 / 2; i = i + 1) begin
             addr_s = i;
-            $display("Addr: %d | Data: %h", addr_s, data_s);
             #1;  
         end
         
@@ -48,9 +47,12 @@ module tb_iram();
 
         for (i = `IRAM_DEPTH / 2; i < 512; i = i + 1) begin
             addr_s = i;
-            $display("Addr: %d | Data: %h", addr_s, data_s);
             #1;  
         end
+        
+        
+        pwr_on_s <= 1;  // power on again
+        addr_s = 5;  // test if we lost the IRAM content
         
     
     end

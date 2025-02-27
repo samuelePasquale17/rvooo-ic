@@ -24,12 +24,12 @@
 
 module tb_reg_n();
 
-    reg [`PC_WIDTH-1:0] i_s;
+    reg [`REG_WIDTH-1:0] i_s;
     reg ld_s, pwr_on_s, clk_s, rst_s;
-    wire  [`PC_WIDTH-1:0] q_s;
+    wire  [`REG_WIDTH-1:0] q_s;
 
     // device under test
-    reg_n dut (
+    reg_n #(.WIDTH(`REG_WIDTH)) dut (
         .i(i_s),
         .q(q_s),
         .ld(ld_s),
